@@ -1,0 +1,48 @@
+# The cloud hosting's front door. nginx's image fills in the environment variables here when it starts.
+resolver 127.0.0.11 valid=5s ipv6=off;
+
+map "$request_method:$http_authorization" $store_refused {
+  default 1;
+  "~^(GET|HEAD|OPTIONS):" 0;
+  "PUT:Bearer ${STORE_TOKEN}" 0;
+  "DELETE:Bearer ${STORE_TOKEN}" 0;
+}
+
+server {
+  listen ${CLOUD_PORT};
+  client_max_body_size 300m;
+  # Designs and exports are this size: kept in memory rather than a temporary file with a warning each.
+  client_body_buffer_size 16m;
+
+  # The store: GET a file, PUT one (the directories come with it), DELETE one. Writes need the store's token, which
+  # only the runner and the executors hold; the page and its editor read files as plain URLs.
+  location /store/ {
+    add_header Access-Control-Allow-Origin * always;
+    add_header Access-Control-Allow-Methods "GET, HEAD, OPTIONS" always;
+    add_header Access-Control-Max-Age 600 always;
+    if ($request_method = OPTIONS) { return 204; }
+    if ($store_refused) { return 401; }
+    root /data;
+    # A file the store does not have is an answer, not an error.
+    log_not_found off;
+    dav_methods PUT DELETE;
+    create_full_put_path on;
+    dav_access user:rw group:r all:r;
+    expires -1;
+  }
+
+  # Each executor, by its service name, for the runner and other servers of yours, never a page (no CORS):
+  # /executor-1/sessions → executor-1:8080/sessions, with the token.
+  location ~ ^/(?<executor>executor-[0-9]+)/ {
+    # A browser names its page; nginx adds the token, so a page's request (a form post needs no CORS) would spend the licence.
+    if ($http_origin) { return 403; }
+    rewrite ^/executor-[0-9]+(/.*)$ $1 break;
+    proxy_pass http://$executor:8080;
+    proxy_http_version 1.1;
+    proxy_set_header Authorization "Bearer ${EXECUTOR_TOKEN}";
+    # Passed on as it comes: a large answer (a render, an export) never goes to a temporary file with a warning.
+    proxy_buffering off;
+    proxy_read_timeout 300s;
+    proxy_send_timeout 300s;
+  }
+}

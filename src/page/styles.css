@@ -1,0 +1,628 @@
+@import '../../shared/src/styles/base.css';
+
+/* Three floating panels: brand kit, designs, assistant, each under the same header row. */
+
+.app {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr) 360px;
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+
+.brand,
+.home {
+  overflow-y: auto;
+  padding-bottom: var(--space-4);
+}
+
+.brand > :not(.panel-head),
+.home > :not(.panel-head) {
+  margin-left: var(--space-4);
+  margin-right: var(--space-4);
+}
+
+/* Brand kit */
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-self: start;
+  max-height: 100%;
+}
+
+.brand .label {
+  margin-top: var(--space-3);
+}
+
+.tenant {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.tenant img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex: none;
+}
+
+.tenant select {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  font-weight: 500;
+}
+
+.tagline {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.swatches,
+.typefaces {
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.swatches li,
+.typefaces li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 36px;
+}
+
+.swatches .chip {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.typefaces li {
+  justify-content: space-between;
+}
+
+.typefaces li span:first-child {
+  font-size: 18px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.typefaces .role {
+  flex: none;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* Designs home */
+
+.home {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Assistant: never taller than the viewport; the messages scroll, the input stays at the bottom. */
+
+.assistant {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.log {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-4) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.log > li {
+  flex: none;
+  overflow-wrap: anywhere;
+}
+
+.log .user {
+  align-self: flex-end;
+  max-width: 85%;
+  padding: var(--space-2) var(--space-3);
+  white-space: pre-wrap;
+  background: var(--accent-soft);
+  border-radius: 12px 12px 4px 12px;
+}
+
+.turn {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.steps {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-3);
+}
+
+.steps summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.steps summary::-webkit-details-marker {
+  display: none;
+}
+
+.steps summary:hover,
+.steps[open] summary {
+  color: var(--text-2);
+}
+
+.steps ol {
+  margin: var(--space-1) 0 0;
+  padding-left: 16px;
+}
+
+.steps .failed {
+  color: var(--danger);
+}
+
+.steps pre,
+.markdown pre {
+  font: 12px/1.5 var(--font-mono);
+  background: var(--muted);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+
+.steps pre {
+  margin: var(--space-1) 0 var(--space-2);
+  white-space: pre-wrap;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.status .spinner {
+  width: 12px;
+  height: 12px;
+  border-width: 1.5px;
+}
+
+.previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.previews:empty {
+  display: none;
+}
+
+.previews .preview {
+  max-width: 100%;
+  height: auto;
+  padding: 4px 10px 4px 4px;
+  gap: var(--space-2);
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.previews .preview span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.previews img {
+  display: block;
+  max-width: 64px;
+  max-height: 64px;
+  border-radius: var(--radius-s);
+}
+
+.turn .error {
+  color: var(--danger);
+}
+
+.turn .notice {
+  margin: 0;
+  box-shadow: none;
+  background: var(--accent-soft);
+}
+
+.turn .notice a {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.turn .file {
+  align-self: flex-start;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+label.button.busy {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.markdown > :first-child {
+  margin-top: 0;
+}
+
+.markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown p,
+.markdown ul,
+.markdown ol,
+.markdown pre,
+.markdown blockquote,
+.markdown table {
+  margin: 0 0 var(--space-2);
+}
+
+.markdown ul,
+.markdown ol {
+  padding-left: 20px;
+}
+
+.markdown ul {
+  list-style: disc;
+}
+
+.markdown ol {
+  list-style: decimal;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  margin: var(--space-3) 0 var(--space-1);
+  font: 600 14px/20px var(--font);
+  letter-spacing: 0;
+}
+
+.markdown code {
+  font: 12.5px/1.5 var(--font-mono);
+  padding: 1px 4px;
+  border-radius: var(--radius-s);
+  background: var(--muted);
+}
+
+.markdown pre code {
+  padding: 0;
+  background: none;
+}
+
+.markdown blockquote {
+  padding-left: var(--space-3);
+  color: var(--text-2);
+  box-shadow: inset 2px 0 0 var(--border);
+}
+
+.markdown a {
+  color: var(--accent);
+}
+
+/* The chat breaks anywhere, which would let a table squeeze a column to one letter: cells break between words, and a wider table scrolls. */
+.markdown table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.markdown th,
+.markdown td {
+  padding: 2px var(--space-2);
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.suggest {
+  display: none;
+  gap: var(--space-2);
+  padding: 0 var(--space-4) var(--space-3);
+}
+
+.assistant.empty .suggest {
+  display: grid;
+  justify-items: start;
+}
+
+.suggest p {
+  margin: 0;
+  color: var(--text-2);
+}
+
+.chip {
+  height: auto;
+  min-height: 28px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: normal;
+  text-align: left;
+  border: 0;
+  border-radius: 999px;
+  background: var(--muted);
+  color: var(--text-2);
+}
+
+.composer {
+  flex: none;
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.composer textarea {
+  resize: none;
+  width: 100%;
+  min-height: 72px;
+}
+
+.composer select {
+  height: 32px;
+  min-width: 0;
+  max-width: 50%;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+.cost {
+  font-size: 12px;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* A design, opened large */
+
+.design-view {
+  position: relative;
+  border: 0;
+  border-radius: var(--radius-l);
+  padding: var(--space-6);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-pop);
+  width: min(1000px, 94vw);
+  max-height: 92dvh;
+}
+
+.design-view[open] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: var(--space-6);
+}
+
+.design-view::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
+
+.design-view .stage {
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+  padding: var(--space-6);
+  background: var(--stage);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.design-view .stage img {
+  display: block;
+  max-width: 100%;
+  max-height: 68dvh;
+  border-radius: 2px;
+  box-shadow:
+    0 0 0 1px var(--border),
+    var(--shadow-card);
+}
+
+.view-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-6);
+}
+
+.view-side h2 {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
+.view-side p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.view-side .actions {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.view-side .downloads {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.view-side .downloads {
+  flex-wrap: wrap;
+}
+
+.view-side .downloads .label {
+  flex-basis: 100%;
+}
+
+.design-view .close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  margin: 0;
+}
+
+/* While the library opens: one small popup, no scrim. */
+
+.loading {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.loading-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 10px 16px;
+  border-radius: var(--radius-l);
+  background: var(--surface);
+  box-shadow: var(--shadow-pop);
+  pointer-events: auto;
+}
+
+.loading-card p {
+  margin: 0;
+}
+
+.loading.failed .spinner {
+  display: none;
+}
+
+.loading.failed p {
+  color: var(--danger);
+}
+
+/* What a visitor should know: the first-visit card, the ⓘ beside the credits, and the line under the downloads */
+
+.usage-card {
+  display: none;
+  margin: 0 var(--space-4) var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+}
+
+.assistant.empty .usage-card:not([hidden]) {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+}
+
+.usage-card h3 {
+  margin: 0;
+  font-size: 13px;
+}
+
+.usage-points {
+  margin: 0;
+  padding-left: 1.1em;
+  display: grid;
+  gap: var(--space-1);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+button.info {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.usage-dialog {
+  border: 0;
+  border-radius: var(--radius-l);
+  padding: var(--space-6);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-pop);
+  width: min(460px, 92vw);
+}
+
+.usage-dialog::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
+
+.usage-dialog h2 {
+  margin: 0 0 var(--space-3);
+  font-size: 16px;
+}
+
+.usage-dialog .usage-points {
+  font-size: 13px;
+}
+
+.usage-dialog a {
+  color: var(--accent);
+}
+
+.usage-dialog form {
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.clear-data-dialog p {
+  margin: 0 0 var(--space-3);
+  font-size: 13px;
+}
+
+.clear-data-dialog .usage-points {
+  margin: 0 0 var(--space-3);
+}
+
+.clear-data-dialog form {
+  gap: var(--space-2);
+}
+
+.clear-data-dialog button.danger {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: transparent;
+}
+
+.clear-data-dialog button.danger:hover {
+  background: var(--surface-hover);
+}
+
+.view-side .downloads-note {
+  margin: calc(var(--space-2) * -1) 0 0;
+  font-size: 12px;
+  color: var(--text-3);
+}

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agentic Design Manager</title>
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="./src/page/styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <span class="wordmark">CoDesign</span>
+      <span class="spacer"></span>
+      <span class="mode muted" id="mode" hidden></span>
+      <button
+        id="usage-info"
+        type="button"
+        class="ghost icon info"
+        aria-label="About credits and your data"
+        title="About credits and your data"
+      >
+        ⓘ
+      </button>
+      <button id="clear-data" type="button" class="ghost" hidden>
+        Clear data
+      </button>
+    </header>
+    <p class="notice" id="notice" hidden></p>
+    <div class="loading" id="loading" role="status">
+      <div class="loading-card">
+        <span class="spinner" aria-hidden="true"></span>
+        <p>Opening your library…</p>
+      </div>
+    </div>
+
+    <main class="app" id="app" hidden>
+      <aside class="brand panel" aria-labelledby="brand-title">
+        <div class="panel-head"><h2 id="brand-title">Brand</h2></div>
+        <label class="tenant">
+          <img id="tenant-logo" alt="" />
+          <select id="tenant" aria-label="Brand"></select>
+        </label>
+        <p class="tagline muted" id="tagline"></p>
+        <h2 class="label">Colours</h2>
+        <ul class="swatches" id="colors"></ul>
+        <h2 class="label">Typefaces</h2>
+        <ul class="typefaces" id="typefaces"></ul>
+      </aside>
+
+      <section class="home panel" aria-labelledby="home-title">
+        <div class="panel-head">
+          <h2 id="home-title">Designs</h2>
+          <label
+            class="button"
+            id="upload-label"
+            title="Photoshop, InDesign, PDF, PowerPoint or .imgly: it opens as a new design"
+          >
+            <span>Import a file</span>
+            <input
+              id="upload"
+              class="visually-hidden"
+              type="file"
+              accept=".imgly,.psd,.idml,.pdf,.pptx"
+            />
+          </label>
+        </div>
+        <ul class="grid" id="designs"></ul>
+        <p class="empty-state muted" id="empty" hidden>
+          No designs yet. Ask the assistant →
+        </p>
+      </section>
+
+      <section class="assistant panel empty" aria-labelledby="assistant-title">
+        <div class="panel-head">
+          <h2 id="assistant-title">Assistant</h2>
+          <button id="clear-chat" type="button" class="ghost">
+            Clear chat
+          </button>
+        </div>
+        <ol class="log" id="log" aria-live="polite"></ol>
+        <aside class="usage-card" id="usage-card" hidden>
+          <h3>Before you start</h3>
+          <button type="button" class="ghost">Got it</button>
+        </aside>
+        <div class="suggest" id="suggest">
+          <p>Try one of these, about your starter designs:</p>
+        </div>
+        <form class="composer" id="composer">
+          <textarea
+            id="prompt"
+            rows="3"
+            placeholder="Ask for a design, or a change to one…"
+            aria-label="Message the assistant"
+            required
+          ></textarea>
+          <div class="row">
+            <select id="model" aria-label="Model"></select>
+            <span class="spacer"></span>
+            <span
+              class="cost"
+              id="cost"
+              title="What the model cost for the last reply, at list price"
+            ></span>
+            <button id="stop" type="button" hidden>Stop</button>
+            <button id="send" type="submit" class="primary">Send</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <dialog
+      class="design-view"
+      id="design-view"
+      aria-labelledby="view-title"
+      closedby="any"
+    >
+      <div class="stage"><img id="view-image" alt="" /></div>
+      <div class="view-side">
+        <h2 id="view-title"></h2>
+        <p id="view-meta"></p>
+        <div class="actions">
+          <button type="button" class="primary" id="view-ask">
+            Ask the assistant about it
+          </button>
+        </div>
+        <div class="downloads">
+          <span class="label">Download</span>
+          <button type="button" id="view-png">PNG</button>
+          <button type="button" id="view-pdf">PDF</button>
+          <button type="button" id="view-imgly">.imgly</button>
+        </div>
+        <p class="downloads-note">
+          PNG and PDF are paid by the license behind this page; .imgly and
+          saving are free.
+        </p>
+      </div>
+      <form method="dialog" class="close">
+        <button class="ghost icon" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path
+              d="M18 6 6 18M6 6l12 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </form>
+    </dialog>
+
+    <dialog
+      class="usage-dialog"
+      id="usage-dialog"
+      aria-labelledby="usage-title"
+      closedby="any"
+    >
+      <h2 id="usage-title">Credits and your data</h2>
+      <form method="dialog"><button class="primary">Close</button></form>
+    </dialog>
+
+    <dialog
+      class="usage-dialog clear-data-dialog"
+      id="clear-data-dialog"
+      aria-labelledby="clear-data-title"
+      closedby="any"
+    >
+      <h2 id="clear-data-title">Clear this demo’s data?</h2>
+      <p>This deletes everything the demo keeps in this browser:</p>
+      <ul class="usage-points">
+        <li>your designs, their previews and the chat with the assistant,</li>
+        <li>
+          the images and files you uploaded or imported, and the ones the
+          assistant generated,
+        </li>
+        <li>
+          the brands’ demo data, which comes back as new on the next load.
+        </li>
+      </ul>
+      <p>It can’t be undone. Files you downloaded stay on your computer.</p>
+      <form method="dialog">
+        <button value="cancel">Cancel</button>
+        <button value="clear" class="danger">Delete everything</button>
+      </form>
+    </dialog>
+
+    <script type="module" src="./src/page/main.ts"></script>
+    <p class="desktop-only">This demo runs on a desktop browser.</p>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  // The runner's code, which runs without the DOM, under WebWorker types.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "WebWorker"],
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "inlineSources": false,
+    "types": ["vite/client"]
+  },
+  "include": [".", "../*.ts", "../hosting/*/*.worker.ts"]
+}
