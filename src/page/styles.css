@@ -392,7 +392,7 @@ label.button.busy {
   height: 32px;
   min-width: 0;
   max-width: 50%;
-  padding: 0 8px;
+  padding: 0 32px 0 8px;
   font-size: 12px;
 }
 
@@ -527,26 +527,7 @@ label.button.busy {
   color: var(--danger);
 }
 
-/* What a visitor should know: the first-visit card, the ⓘ beside the credits, and the line under the downloads */
-
-.usage-card {
-  display: none;
-  margin: 0 var(--space-4) var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius);
-  background: var(--accent-soft);
-}
-
-.assistant.empty .usage-card:not([hidden]) {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-2);
-}
-
-.usage-card h3 {
-  margin: 0;
-  font-size: 13px;
-}
+/* What a visitor should know: the ⓘ beside the credits, and the line under the downloads */
 
 .usage-points {
   margin: 0;

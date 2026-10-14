@@ -1,5 +1,5 @@
-// This demo's cloud hosting: the runner (`runner/`), the executors and the store on servers you run, and only the page
-// in the browser. IMG.LY does not host this for you. `src/hosting.ts` picks it; what to run is `compose.yaml` here, and the demo's README says how.
+// This starter kit's cloud hosting: the runner (`runner/`), the executors and the store on servers you run, and only the page
+// in the browser. IMG.LY does not host this for you. `src/hosting.ts` picks it; what to run is `compose.yaml` here, and the starter kit's README says how.
 
 import type { EnginePluginModule } from '@imgly/codesign-sdk';
 import type { GetToken } from '../../../shared/src/page/token-requests.js';
@@ -49,8 +49,11 @@ export const editorPlugins = (tenant: string): EnginePluginModule[] =>
 /** What stops this hosting, in words for the visitor; `undefined` when nothing does. */
 export const hostProblem = async (): Promise<string | undefined> =>
   RUNNER === '' || STORE === ''
-    ? 'This demo is set up for cloud hosting, but its build has no VITE_RUNNER_URL or VITE_STORE_URL. Set both in .env (see src/hosting/cloud/.env.template) and start the runner and the containers.'
+    ? 'This starter kit is set up for cloud hosting, but its build has no VITE_RUNNER_URL or VITE_STORE_URL. Set both in .env (see src/hosting/cloud/.env.template) and start the runner and the containers.'
     : undefined;
 
 /** Not offered: the store is yours to run, and a button on the page never deletes it. */
 export const clearData: (() => Promise<void>) | undefined = undefined;
+
+/** Whether the page's CE.SDK licence starts the executors: the executors start on their own key; the page’s licence is only for the editor. */
+export const licenceStartsExecutors = false;

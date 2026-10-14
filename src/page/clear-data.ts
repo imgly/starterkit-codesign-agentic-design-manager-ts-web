@@ -3,7 +3,7 @@
 
 import { clearData } from '../hosting.js';
 
-/** The prefix of the page's own localStorage keys: the chosen brand and the first-visit card. */
+/** The prefix of the page's own localStorage keys: the chosen brand. */
 const PAGE_KEY_PREFIX = 'codesign-tab.';
 
 export function forgetPageKeys(

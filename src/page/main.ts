@@ -1,6 +1,10 @@
 // The page: starts the session, connects to the runner, and shows the chat and the designs.
 
-import { hasLicence, licenceFor } from '../../shared/src/licence.js';
+import {
+  editorLicenceFor,
+  hasLicence,
+  NO_LICENCE
+} from '../../shared/src/licence.js';
 import { checkGateway } from '../../shared/src/page/check.js';
 import { outOfCredits } from '../../shared/src/page/credits.js';
 import {
@@ -12,7 +16,12 @@ import {
   MODEL_CHOICES
 } from '../../shared/src/runner/model.js';
 
-import { connectRunner, hostProblem, visitorCredits } from '../hosting.js';
+import {
+  connectRunner,
+  hostProblem,
+  licenceStartsExecutors,
+  visitorCredits
+} from '../hosting.js';
 
 import type { PageToRunner, RunnerToPage } from '../protocol.js';
 import { BRAND_CHIPS, chipLabel, chipPrompt } from '../brand/chips.js';
@@ -61,8 +70,9 @@ async function main(): Promise<void> {
 function start(session: GatewaySession): void {
   const { gatewayBaseURL, getToken } = session;
   if (!hasLicence()) {
-    notice('No CE.SDK license: set VITE_CESDK_LICENSE in .env.', 'error');
-    return;
+    // Only the editor needs it where the executors run on servers: the rest of the page works without one.
+    if (licenceStartsExecutors) return notice(NO_LICENCE, 'error');
+    notice(`The editor is off. ${NO_LICENCE}`);
   }
   $('app').hidden = false;
 
@@ -100,7 +110,6 @@ function start(session: GatewaySession): void {
 
   if (visitorCredits) {
     usageNotices({
-      card: $('usage-card'),
       info: $<HTMLButtonElement>('usage-info'),
       dialog: $<HTMLDialogElement>('usage-dialog')
     });
@@ -125,7 +134,7 @@ function start(session: GatewaySession): void {
   const prompt = $<HTMLTextAreaElement>('prompt');
   const home = designsHome({
     post,
-    license: licenceFor(getToken),
+    license: editorLicenceFor(getToken),
     ask: (card) => {
       prompt.value = `About “${card.title}” (design ${card.id}): `;
       prompt.focus();

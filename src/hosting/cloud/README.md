@@ -1,8 +1,8 @@
 # Cloud hosting: what it guarantees
 
-This folder runs the demo with everything but the page on your servers: the
+This folder runs the starter kit with everything but the page on your servers: the
 runner (`runner/`), the executors (IMG.LY's published image) and a store
-(`compose.yaml`). The demo's README says how to start it. Whatever you change
+(`compose.yaml`). The starter kit's README says how to start it. Whatever you change
 here, keep these rules, because a product built on this shape depends on them.
 
 ## Every link is a store URL
