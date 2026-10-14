@@ -1,13 +1,6 @@
 # The cloud hosting's front door. nginx's image fills in the environment variables here when it starts.
 resolver 127.0.0.11 valid=5s ipv6=off;
 
-map "$request_method:$http_authorization" $store_refused {
-  default 1;
-  "~^(GET|HEAD|OPTIONS):" 0;
-  "PUT:Bearer ${STORE_TOKEN}" 0;
-  "DELETE:Bearer ${STORE_TOKEN}" 0;
-}
-
 server {
   listen ${CLOUD_PORT};
   client_max_body_size 300m;
@@ -21,6 +14,10 @@ server {
     add_header Access-Control-Allow-Methods "GET, HEAD, OPTIONS" always;
     add_header Access-Control-Max-Age 600 always;
     if ($request_method = OPTIONS) { return 204; }
+    # Compared in `if`, not a map: a map key as long as an `openssl rand -hex 32` token stops nginx from starting.
+    set $store_refused 1;
+    if ($request_method ~ ^(GET|HEAD)$) { set $store_refused 0; }
+    if ($http_authorization = "Bearer ${STORE_TOKEN}") { set $store_refused 0; }
     if ($store_refused) { return 401; }
     root /data;
     # A file the store does not have is an answer, not an error.
