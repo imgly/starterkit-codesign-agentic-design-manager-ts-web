@@ -1,4 +1,16 @@
-# Agentic Design Manager — a CoDesign starter kit
+<p align="center">
+  <a href="https://img.ly/static/agentic-design-manager.mp4"><img src=".github/assets/demo.gif" width="1280" alt="Agentic Design Manager: a brand kit, a grid of designs and an assistant that makes three on-brand A/B variants of a sale post"></a>
+</p>
+
+# Agentic Design Manager — an AI Design Assistant Starter Kit
+
+Agentic Design Manager is a TypeScript starter kit for a design platform with
+an AI design assistant, built on IMG.LY's CoDesign SDK: people ask in a chat,
+and a design agent makes or changes designs in their brand, which they can
+keep editing in CE.SDK's editor. It is for teams that want on-brand design
+generation inside their own product.
+
+Watch the [demo video](https://img.ly/static/agentic-design-manager.mp4) (about 20 seconds).
 
 A design platform with a design agent: two fictional brands (Nordwind Coffee,
 a roastery, and Tidewell Botanics, an online skincare shop) with their brand
@@ -31,7 +43,7 @@ files and serves them by URL.
   ([CE.SDK licensing](https://img.ly/docs/cesdk/js/licensing-8aa063/#trial-license-key)).
   It goes in `VITE_CESDK_LICENSE`.
 - A **CoDesign license key**, which pays for model calls, generated images and
-  exports. To get one, [contact sales](https://img.ly/forms/contact-sales/).
+  exports. [Contact sales](https://img.ly/forms/contact-sales/) to get a CoDesign license key.
   It goes in `.env` twice, under two names: `IMGLY_GATEWAY_API_KEY`, which the
   runner sends to IMG.LY's AI gateway, and `IMGLY_CESDK_LICENSE`, which the
   executors start with. It is not the CE.SDK key in `VITE_CESDK_LICENSE`.
